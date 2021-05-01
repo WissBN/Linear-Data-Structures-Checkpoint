@@ -1,0 +1,65 @@
+ALGORITHM linear_data_structure_checkpoint
+VAR
+    set1,set2 : ARRAY_OF INTEGER[];
+    sum_diff_n, sum_el : INTEGER :=0;
+    i,j :INTEGER;
+
+
+BEGIN
+//Array
+    FOR i FROM 0 TO set1.length STEP 1  DO
+        FOR j FROM 0 TO set2.length STEP 1  DO
+            IF (set1[i]===set2[j]) THEN
+                sum_el:= sum_el + set1[i];
+            END_IF
+        END_FOR
+    END_FOR
+   FOR i FROM 0 TO set1.length STEP 1  DO
+        FOR j FROM 0 TO set2.length STEP 1  DO
+            IF (set1[i]<>set2[j]) THEN
+                sum_diff_n:= sum_diff_n + set1[i];
+            END_IF
+        END_FOR
+    END_FOR
+    Write("sum of common elements",sum_el);
+END
+
+
+//HASH_TABLE
+ALGORITHM linear_data_structure_2_checkpoint
+VAR
+    set1,set2 : ARRAY_OF INTEGER[];
+    sum_diff_n, sum_el : INTEGER :=0 ;
+    i :INTEGER;
+    count : INTEGER :=1;
+    htab : HASH_TABLE<INTEGER,INTEGER>;
+
+BEGIN
+
+    FOR i FROM 0 TO set1.length -1 STEP 1  DO
+       htab.insert(set1[i],count) 
+    END_FOR
+
+    FOR i FROM 0 TO set2.length -1 STEP 1  DO
+        IF (htab.lookup(set2[i])= TRUE) THEN
+           htab.insert(<set2[i],count+1>)
+           ELSE
+               htab.insert(<set2[i],count>)
+        END_IF
+    END_FOR
+
+    FOR i FROM 0 TO htab.length -1 STEP 1  DO
+       IF (htab.get(set2[i]) = 1) THEN
+           sum_diff_n:= sum_diff_n + set2[i];
+       END_IF
+     END_FOR
+
+    FOR i FROM 0 TO htab.length -1 STEP 1  DO
+       IF (htab.get(set2[i]) > 1) THEN
+           sum_el:= sum_el + set2[i];
+       END_IF
+     END_FOR
+
+   Write("sum of common elements",sum_el);
+   Write("sum of different numbers",sum_diff_n);
+END
